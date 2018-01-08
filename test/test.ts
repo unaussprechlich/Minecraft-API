@@ -11,12 +11,12 @@ const USERNAME2 = 'NerfLv00';
 
     @test("throws an Error if is not valid")
     public throwErrorIfUsernameInvalid(done){
-        MinecraftAPI.uuidAt("",Date.now()).catch(done());
+        MinecraftAPI.uuidForNameAt("",Date.now()).catch(done());
     }
 
     @test("should worky correctly")
     public async test(){
-        const response = await MinecraftAPI.uuidAt(USERNAME,Date.now());
+        const response = await MinecraftAPI.uuidForNameAt(USERNAME,Date.now());
         expect(response).to.equal(UUID);
     }
 

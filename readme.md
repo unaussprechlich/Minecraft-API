@@ -8,7 +8,7 @@
 
 ## Usage
 
-### MinecraftAPI.uuid(username)
+### MinecraftAPI.uuidForName(username)
 
 Parameters:
 
@@ -19,7 +19,7 @@ Example:
  const MinecraftAPI = require('minecraft-api');
  
  function foo() {
-     MinecraftAPI.uuidFromName('jeb_')
+     MinecraftAPI.uuidForName('jeb_')
          .then(uuid => console.log(uuid))
          .catch(err => console.log(err))
  }
@@ -31,7 +31,7 @@ const MinecraftAPI = require('minecraft-api');
 
 async function foo() {
     try{
-        const uuid = await MinecraftAPI.uuidFromName('jeb_'); 
+        const uuid = await MinecraftAPI.uuidForName('jeb_'); 
         console.log(uuid);
     } catch(err){
         console.error(err);

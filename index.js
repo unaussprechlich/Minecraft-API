@@ -43,58 +43,32 @@ function _simplePost(url, array) {
         });
     });
 }
-/**
- * Return the uuid matching the Username at a given time.
- * @param {string} username
- * @param {number} time
- * @returns {Promise<UuidResponseModel>}
- */
-function uuidAt(username, time) {
+function uuidForNameAt(username, time) {
     return __awaiter(this, void 0, void 0, function* () {
         const response = yield _simpleGet('https://api.mojang.com/users/profiles/minecraft/' + encodeURIComponent(username) + '?at=' + time);
         return response.id;
     });
 }
-exports.uuidAt = uuidAt;
-/**
- * Get the uuid for a username.
- * @param {string} username
- * @returns {Promise<UuidResponseModel>}
- */
-function uuidFromName(username) {
+exports.uuidForNameAt = uuidForNameAt;
+function uuidForName(username) {
     return __awaiter(this, void 0, void 0, function* () {
         const response = yield _simpleGet('https://api.mojang.com/users/profiles/minecraft/' + encodeURIComponent(username) + '?at=' + Date.now());
         return response.id;
     });
 }
-exports.uuidFromName = uuidFromName;
-/**
- * Return a Array of uuids matched to the given usernames
- * @param {Array<string>} names
- * @returns {Promise<Array<UuidResponseModel>>}
- */
-function uuidFromNames(names) {
+exports.uuidForName = uuidForName;
+function uuidForNames(names) {
     return __awaiter(this, void 0, void 0, function* () {
         return _simplePost('https://api.mojang.com/profiles/minecraft', names);
     });
 }
-exports.uuidFromNames = uuidFromNames;
-/**
- * Returns the NameHistory for a given UUID
- * @param {string} uuid
- * @returns {Promise<Array<NameHistoryResponseModel>>}
- */
+exports.uuidForNames = uuidForNames;
 function nameHistoryForUuid(uuid) {
     return __awaiter(this, void 0, void 0, function* () {
         return _simpleGet('https://api.mojang.com/user/profiles/' + encodeURIComponent(uuid) + '/names');
     });
 }
 exports.nameHistoryForUuid = nameHistoryForUuid;
-/**
- * Returns the NameHistory for a given Username
- * @param {string} username
- * @returns {Promise<Array<NameHistoryResponseModel>>}
- */
 function nameHistoryForName(username) {
     return __awaiter(this, void 0, void 0, function* () {
         const uuid = yield this.uuid(username);
@@ -102,14 +76,9 @@ function nameHistoryForName(username) {
     });
 }
 exports.nameHistoryForName = nameHistoryForName;
-/**
- * Returns the Profile for a given uuid
- * @param {string} uuid
- * @returns {Promise<ProfileResponseModel>}
- */
-function profile(uuid) {
+function profileForUuid(uuid) {
     return __awaiter(this, void 0, void 0, function* () {
         return _simpleGet('https://sessionserver.mojang.com/session/minecraft/profile/' + encodeURIComponent(uuid));
     });
 }
-exports.profile = profile;
+exports.profileForUuid = profileForUuid;

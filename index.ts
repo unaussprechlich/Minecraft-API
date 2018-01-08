@@ -50,7 +50,7 @@ export interface UuidResponseModel {
  * @param {number} time
  * @returns {Promise<UuidResponseModel>}
  */
-export async function uuidAt(username: string, time: number){
+export async function uuidForNameAt(username: string, time: number){
     const response = await _simpleGet<UuidResponseModel>('https://api.mojang.com/users/profiles/minecraft/' + encodeURIComponent(username) + '?at=' + time);
     return response.id
 }
@@ -60,7 +60,7 @@ export async function uuidAt(username: string, time: number){
  * @param {string} username
  * @returns {Promise<UuidResponseModel>}
  */
-export async function uuidFromName(username: string){
+export async function uuidForName(username: string){
     const response = await _simpleGet<UuidResponseModel>('https://api.mojang.com/users/profiles/minecraft/' + encodeURIComponent(username) + '?at=' + Date.now());
     return response.id
 }
@@ -70,7 +70,7 @@ export async function uuidFromName(username: string){
  * @param {Array<string>} names
  * @returns {Promise<Array<UuidResponseModel>>}
  */
-export async function uuidFromNames(names : Array<string>){
+export async function uuidForNames(names : Array<string>){
     return _simplePost<UuidResponseModel>('https://api.mojang.com/profiles/minecraft', names);
 }
 
@@ -115,6 +115,6 @@ export interface ProfileResponseModel {
  * @param {string} uuid
  * @returns {Promise<ProfileResponseModel>}
  */
-export async function profile(uuid : string) : Promise<ProfileResponseModel>{
+export async function profileForUuid(uuid : string) : Promise<ProfileResponseModel>{
     return _simpleGet<ProfileResponseModel>('https://sessionserver.mojang.com/session/minecraft/profile/' + encodeURIComponent(uuid));
 }

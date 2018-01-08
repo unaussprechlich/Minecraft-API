@@ -22,11 +22,11 @@ const UUID = '4064d7ecc2124a1cb252ecc0403a2824';
 const USERNAME2 = 'NerfLv00';
 let TestMinecraftAPI = class TestMinecraftAPI {
     throwErrorIfUsernameInvalid(done) {
-        MinecraftAPI.uuidAt("", Date.now()).catch(done());
+        MinecraftAPI.uuidForNameAt("", Date.now()).catch(done());
     }
     test() {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield MinecraftAPI.uuidAt(USERNAME, Date.now());
+            const response = yield MinecraftAPI.uuidForNameAt(USERNAME, Date.now());
             chai_1.expect(response).to.equal(UUID);
         });
     }
