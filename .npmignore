@@ -126,4 +126,4 @@ typings/
 .gitignore
 .npmignore
 tsconfig.json
-*.ts
+/test
