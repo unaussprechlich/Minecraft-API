@@ -1,6 +1,6 @@
 {
   "name": "minecraft-api",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
@@ -22,13 +22,14 @@
   },
   "homepage": "https://github.com/unaussprechlich/minecraft-api",
   "dependencies": {
-    "request": "^2.83.0"
+    "request": "^2.88.0"
   },
   "devDependencies": {
-    "@types/chai": "^4.0.10",
-    "chai": "^4.1.2",
-    "lab": "^15.1.2",
-    "mocha-typescript": "^1.1.12",
-    "mocha": "^3.5.3"
+    "@types/chai": "^4.1.7",
+    "chai": "^4.2.0",
+    "mocha": "^3.5.3",
+    "mocha-typescript": "^1.1.17",
+    "ts-node": "^8.1.0",
+    "typescript": "^3.4.5"
   }
 }

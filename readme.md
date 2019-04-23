@@ -1,6 +1,8 @@
+<p align="center" style="text-align: center;"><img src="https://api.hypixel.net/assets/images/logo.png" width="300" alt="Hypixel logo"/></p>
+
 # minecraft-api
 
-`minecraft-api` is a simple wrapper around the [Minecraft API](http://wiki.vg/Mojang_API). The package is really lightweight and does use Promises as retuntype.
+`minecraft-api` is a simple wrapper around the [Minecraft API](http://wiki.vg/Mojang_API). The package is really lightweight and does use Promises as return type.
 
 ## Installation
 

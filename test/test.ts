@@ -5,7 +5,6 @@ import { suite, test, slow, timeout } from "mocha-typescript";
 
 const USERNAME = 'unaussprechlich';
 const UUID = '4064d7ecc2124a1cb252ecc0403a2824';
-const USERNAME2 = 'NerfLv00';
 
 @suite class TestMinecraftAPI{
 
@@ -19,7 +18,4 @@ const USERNAME2 = 'NerfLv00';
         const response = await MinecraftAPI.uuidForNameAt(USERNAME,Date.now());
         expect(response).to.equal(UUID);
     }
-
-    //TODO more tests
-
 }

@@ -19,7 +19,6 @@ const chai_1 = require("chai");
 const mocha_typescript_1 = require("mocha-typescript");
 const USERNAME = 'unaussprechlich';
 const UUID = '4064d7ecc2124a1cb252ecc0403a2824';
-const USERNAME2 = 'NerfLv00';
 let TestMinecraftAPI = class TestMinecraftAPI {
     throwErrorIfUsernameInvalid(done) {
         MinecraftAPI.uuidForNameAt("", Date.now()).catch(done());
