@@ -25,7 +25,7 @@ export interface UuidResponseModel {
  * Return the uuid matching the Username at a given time.
  * @param {string} username
  * @param {number} time
- * @returns {Promise<UuidResponseModel>}
+ * @returns {string} uuid
  */
 export async function uuidForNameAt(username: string, time: number){
     const response = await _simpleGet<UuidResponseModel>('/users/profiles/minecraft/' + encodeURIComponent(username) + '?at=' + time);
@@ -35,7 +35,7 @@ export async function uuidForNameAt(username: string, time: number){
 /**
  * Get the uuid for a username.
  * @param {string} username
- * @returns {Promise<UuidResponseModel>}
+ * @returns {string} uuid
  */
 export async function uuidForName(username: string){
     const response = await _simpleGet<UuidResponseModel>('/users/profiles/minecraft/' + encodeURIComponent(username) + '?at=' + Date.now());
@@ -78,6 +78,11 @@ export async function nameHistoryForName(username : string) : Promise<Array<Name
     return _simpleGet<Array<NameHistoryResponseModel>>('/user/profiles/' + encodeURIComponent(uuid) + '/names');
 }
 
+/**
+ * Get the username for a uuid.
+ * @param {string} uuid
+ * @returns {string} username
+ */
 export async function nameForUuid(uuid: string){
     const response = await profileForUuid(uuid);
     return response.name
