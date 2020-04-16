@@ -6,16 +6,19 @@ import { suite, test, slow, timeout } from "mocha-typescript";
 const USERNAME = 'unaussprechlich';
 const UUID = '4064d7ecc2124a1cb252ecc0403a2824';
 
-@suite class TestMinecraftAPI{
+@suite(timeout(5000)) class TestMinecraftAPI{
 
-    @test("throws an Error if is not valid")
-    public throwErrorIfUsernameInvalid(done){
+    @test public throwErrorIfUsernameInvalid(done){
         MinecraftAPI.uuidForNameAt("",Date.now()).catch(done());
     }
 
-    @test("should worky correctly")
-    public async test(){
+    @test public async responseWithCorrectUuid(){
         const response = await MinecraftAPI.uuidForNameAt(USERNAME,Date.now());
         expect(response).to.equal(UUID);
+    }
+
+    @test public async responseWithCorrectUsername(){
+        const response = await MinecraftAPI.nameForUuid(UUID);
+        expect(response).to.equal(USERNAME);
     }
 }

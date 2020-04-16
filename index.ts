@@ -1,39 +1,16 @@
-import request = require("request");
+import Axios from "axios";
+
+const MojangAxios = Axios.create({
+    baseURL: 'https://api.mojang.com/',
+    timeout: 1000
+})
 
 async function _simpleGet<T>(url: string): Promise<T> {
-    return new Promise<T>((resolve, reject) => {
-        request(url, {json: true}, function (err, res, body) {
-            if (typeof body === 'undefined') {
-                reject(new Error('body is undefined'));
-                return
-            }
-
-            if (body.error) {
-                reject(new Error(body.error + ": " + body.errorMessage));
-                return
-            }
-
-            resolve(body);
-        });
-    })
+    return (await MojangAxios.get(url)).data;
 }
 
 async function _simplePost<T>(url: string, array : Array<string>): Promise<Array<T>> {
-    return new Promise<Array<T>>((resolve, reject) => {
-        request.post(url, {json: true, body : array }, function (err, res, body) {
-            if (typeof body === 'undefined') {
-                reject(new Error('body is undefined'));
-                return
-            }
-
-            if (body.error) {
-                reject(new Error(body.error + ": " + body.errorMessage));
-                return
-            }
-
-            resolve(body);
-        });
-    })
+    return (await MojangAxios.post(url, array)).data;
 }
 
 /**
@@ -51,7 +28,7 @@ export interface UuidResponseModel {
  * @returns {Promise<UuidResponseModel>}
  */
 export async function uuidForNameAt(username: string, time: number){
-    const response = await _simpleGet<UuidResponseModel>('https://api.mojang.com/users/profiles/minecraft/' + encodeURIComponent(username) + '?at=' + time);
+    const response = await _simpleGet<UuidResponseModel>('/users/profiles/minecraft/' + encodeURIComponent(username) + '?at=' + time);
     return response.id
 }
 
@@ -61,7 +38,7 @@ export async function uuidForNameAt(username: string, time: number){
  * @returns {Promise<UuidResponseModel>}
  */
 export async function uuidForName(username: string){
-    const response = await _simpleGet<UuidResponseModel>('https://api.mojang.com/users/profiles/minecraft/' + encodeURIComponent(username) + '?at=' + Date.now());
+    const response = await _simpleGet<UuidResponseModel>('/users/profiles/minecraft/' + encodeURIComponent(username) + '?at=' + Date.now());
     return response.id
 }
 
@@ -71,7 +48,7 @@ export async function uuidForName(username: string){
  * @returns {Promise<Array<UuidResponseModel>>}
  */
 export async function uuidForNames(names : Array<string>){
-    return _simplePost<UuidResponseModel>('https://api.mojang.com/profiles/minecraft', names);
+    return _simplePost<UuidResponseModel>('/profiles/minecraft', names);
 }
 
 /**
@@ -88,7 +65,7 @@ export interface NameHistoryResponseModel {
  * @returns {Promise<Array<NameHistoryResponseModel>>}
  */
 export async function nameHistoryForUuid(uuid : string) : Promise<Array<NameHistoryResponseModel>>{
-    return _simpleGet<Array<NameHistoryResponseModel>>('https://api.mojang.com/user/profiles/' + encodeURIComponent(uuid) + '/names');
+    return _simpleGet<Array<NameHistoryResponseModel>>('/user/profiles/' + encodeURIComponent(uuid) + '/names');
 }
 
 /**
@@ -97,8 +74,13 @@ export async function nameHistoryForUuid(uuid : string) : Promise<Array<NameHist
  * @returns {Promise<Array<NameHistoryResponseModel>>}
  */
 export async function nameHistoryForName(username : string) : Promise<Array<NameHistoryResponseModel>>{
-    const uuid = await this.uuid(username);
-    return _simpleGet<Array<NameHistoryResponseModel>>('https://api.mojang.com/user/profiles/' + encodeURIComponent(uuid) + '/names');
+    const uuid = await this.uuidForName(username);
+    return _simpleGet<Array<NameHistoryResponseModel>>('/user/profiles/' + encodeURIComponent(uuid) + '/names');
+}
+
+export async function nameForUuid(uuid: string){
+    const response = await profileForUuid(uuid);
+    return response.name
 }
 
 /**
@@ -116,5 +98,5 @@ export interface ProfileResponseModel {
  * @returns {Promise<ProfileResponseModel>}
  */
 export async function profileForUuid(uuid : string) : Promise<ProfileResponseModel>{
-    return _simpleGet<ProfileResponseModel>('https://sessionserver.mojang.com/session/minecraft/profile/' + encodeURIComponent(uuid));
+    return (await Axios.get('https://sessionserver.mojang.com/session/minecraft/profile/' + encodeURIComponent(uuid))).data as ProfileResponseModel;
 }

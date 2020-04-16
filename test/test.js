@@ -6,10 +6,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -23,19 +24,29 @@ let TestMinecraftAPI = class TestMinecraftAPI {
     throwErrorIfUsernameInvalid(done) {
         MinecraftAPI.uuidForNameAt("", Date.now()).catch(done());
     }
-    test() {
+    responseWithCorrectUuid() {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield MinecraftAPI.uuidForNameAt(USERNAME, Date.now());
             chai_1.expect(response).to.equal(UUID);
         });
     }
+    responseWithCorrectUsername() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield MinecraftAPI.nameForUuid(UUID);
+            chai_1.expect(response).to.equal(USERNAME);
+        });
+    }
 };
 __decorate([
-    mocha_typescript_1.test("throws an Error if is not valid")
+    mocha_typescript_1.test
 ], TestMinecraftAPI.prototype, "throwErrorIfUsernameInvalid", null);
 __decorate([
-    mocha_typescript_1.test("should worky correctly")
-], TestMinecraftAPI.prototype, "test", null);
+    mocha_typescript_1.test
+], TestMinecraftAPI.prototype, "responseWithCorrectUuid", null);
+__decorate([
+    mocha_typescript_1.test
+], TestMinecraftAPI.prototype, "responseWithCorrectUsername", null);
 TestMinecraftAPI = __decorate([
-    mocha_typescript_1.suite
+    mocha_typescript_1.suite(mocha_typescript_1.timeout(5000))
 ], TestMinecraftAPI);
+//# sourceMappingURL=test.js.map
