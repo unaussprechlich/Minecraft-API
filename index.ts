@@ -56,7 +56,7 @@ export async function uuidForNames(names : Array<string>){
  */
 export interface NameHistoryResponseModel {
     name: string,
-    changedTo: string|null
+    changedToAt: number|null
 }
 
 /**
